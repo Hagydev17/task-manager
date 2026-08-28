@@ -1,7 +1,9 @@
-package com.hagydev.task_manager.task_manager.service;
+package com.hagydev.task_manager.task_manager.service.impl;
 
 import com.hagydev.task_manager.task_manager.entity.User;
+import com.hagydev.task_manager.task_manager.exception.UserNotFoundException;
 import com.hagydev.task_manager.task_manager.repository.UserRepository;
+import com.hagydev.task_manager.task_manager.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,10 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    private User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+    }
+
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
@@ -21,12 +27,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return null;
+        return findUserById(id);
     }
 
     @Override
     public User create(User user) {
-        return null;
+        return userRepository.save(user);
     }
 
     @Override
@@ -36,6 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
-
+        User user = findUserById(id);
+        userRepository.delete(user);
     }
 }

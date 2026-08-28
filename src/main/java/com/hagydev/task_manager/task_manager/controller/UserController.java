@@ -2,10 +2,10 @@ package com.hagydev.task_manager.task_manager.controller;
 
 import com.hagydev.task_manager.task_manager.entity.User;
 import com.hagydev.task_manager.task_manager.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +22,23 @@ public class UserController {
     public ResponseEntity<List<User>> findAll() {
         List<User> user = userService.findAll();
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping
+    public ResponseEntity<User> create(@RequestBody @Valid User request) {
+        User user = userService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
