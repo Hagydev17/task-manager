@@ -1,4 +1,8 @@
 package com.hagydev.task_manager.task_manager.dto;
 
-public class UserResponseDTO {
+public record UserResponseDTO(
+        Long id,
+        String name,
+        String email
+) {
 }
