@@ -1,5 +1,7 @@
 package com.hagydev.task_manager.task_manager.service.impl;
 
+import com.hagydev.task_manager.task_manager.dto.UserRequestDTO;
+import com.hagydev.task_manager.task_manager.dto.UserResponseDTO;
 import com.hagydev.task_manager.task_manager.entity.User;
 import com.hagydev.task_manager.task_manager.exception.UserNotFoundException;
 import com.hagydev.task_manager.task_manager.repository.UserRepository;
@@ -21,29 +23,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserResponseDTO> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> new UserResponseDTO(user.getId(), user.getName(), user.getEmail()))
+                .toList();
     }
 
     @Override
-    public User findById(Long id) {
-        return findUserById(id);
+    public UserResponseDTO findById(Long id) {
+        User user = findUserById(id);
+        return new UserResponseDTO(user.getId(), user.getName(), user.getEmail());
     }
 
     @Override
-    public User create(User user) {
-        return userRepository.save(user);
+    public UserResponseDTO create(UserRequestDTO userRequestDTO) {
+        User user = new User();
+        user.setName(userRequestDTO.name());
+        user.setEmail(userRequestDTO.email());
+        user.setPassword(userRequestDTO.password());
+
+        User userSaved = userRepository.save(user);
+
+        return new UserResponseDTO(userSaved.getId(), userSaved.getName(), user.getEmail());
     }
 
     @Override
-    public User update(Long id, User updatedUser) {
+    public UserResponseDTO update(Long id, UserRequestDTO updatedUser) {
         User existingUser = findUserById(id);
 
-        if(updatedUser.getName() != null) existingUser.setName(updatedUser.getName());
-        if(updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
-        if(updatedUser.getPassword() != null) existingUser.setPassword(updatedUser.getPassword());
+        if(updatedUser.name() != null) existingUser.setName(updatedUser.name());
+        if(updatedUser.email() != null) existingUser.setEmail(updatedUser.email());
 
-        return userRepository.save(existingUser);
+        userRepository.save(existingUser);
+        return new UserResponseDTO(existingUser.getId(), existingUser.getName(), existingUser.getEmail());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.hagydev.task_manager.task_manager.controller;
 
-import com.hagydev.task_manager.task_manager.entity.User;
+import com.hagydev.task_manager.task_manager.dto.UserRequestDTO;
+import com.hagydev.task_manager.task_manager.dto.UserResponseDTO;
 import com.hagydev.task_manager.task_manager.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,26 +20,26 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> user = userService.findAll();
+    public ResponseEntity<List<UserResponseDTO>> findAll() {
+        List<UserResponseDTO> user = userService.findAll();
         return ResponseEntity.ok(user);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User user = userService.findById(id);
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable Long id) {
+        UserResponseDTO user = userService.findById(id);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody @Valid User request) {
-        User user = userService.create(request);
+    public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO request) {
+        UserResponseDTO user = userService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody @Valid User request) {
-        User user = userService.update(id, request);
+    public ResponseEntity<UserResponseDTO> update(@PathVariable Long id, @RequestBody @Valid UserRequestDTO request) {
+        UserResponseDTO user = userService.update(id, request);
         return ResponseEntity.ok(user);
     }
 
