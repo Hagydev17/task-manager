@@ -56,13 +56,15 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(taskRequestDTO.title());
         task.setDescription(taskRequestDTO.description());
 
+        Task taskSaved = taskRepository.save(task);
+
         return new TaskResponseDTO(
-                task.getId(),
-                task.getTitle(),
-                task.getDescription(),
-                task.getStatus(),
-                task.getCreatedAt(),
-                task.getUpdatedAt());
+                taskSaved.getId(),
+                taskSaved.getTitle(),
+                taskSaved.getDescription(),
+                taskSaved.getStatus(),
+                taskSaved.getCreatedAt(),
+                taskSaved.getUpdatedAt());
     }
 
     @Override
@@ -73,18 +75,20 @@ public class TaskServiceImpl implements TaskService {
             existingTask.setTitle(updatedTask.title());
         if (updatedTask.description() != null)
             existingTask.setTitle(updatedTask.description());
+
+        Task taskSaved = taskRepository.save(existingTask);
         return new TaskResponseDTO(
-                existingTask.getId(),
-                existingTask.getTitle(),
-                existingTask.getDescription(),
-                existingTask.getStatus(),
-                existingTask.getCreatedAt(),
-                existingTask.getUpdatedAt());
+                taskSaved.getId(),
+                taskSaved.getTitle(),
+                taskSaved.getDescription(),
+                taskSaved.getStatus(),
+                taskSaved.getCreatedAt(),
+                taskSaved.getUpdatedAt());
     }
 
     @Override
     public void delete(Long id) {
-        Task t = findTaskById(id);
-        taskRepository.delete(t);
+        Task task = findTaskById(id);
+        taskRepository.delete(task);
     }
 }
