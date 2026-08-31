@@ -1,5 +1,7 @@
 package com.hagydev.task_manager.task_manager.controller;
 
+import com.hagydev.task_manager.task_manager.dto.TaskRequestDTO;
+import com.hagydev.task_manager.task_manager.dto.TaskResponseDTO;
 import com.hagydev.task_manager.task_manager.entity.Task;
 import com.hagydev.task_manager.task_manager.service.TaskService;
 import jakarta.validation.Valid;
@@ -19,27 +21,27 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> findAll() {
-        List<Task> task = taskService.findAll();
+    public ResponseEntity<List<TaskResponseDTO>> findAll() {
+        List<TaskResponseDTO> task = taskService.findAll();
         return ResponseEntity.ok(task);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> findById(@PathVariable Long id) {
-        Task task = taskService.findById(id);
-        return ResponseEntity.ok(task);
+    public ResponseEntity<TaskResponseDTO> findById(@PathVariable Long id) {
+        TaskResponseDTO taskResponseDTO = taskService.findById(id);
+        return ResponseEntity.ok(taskResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Task> create (@RequestBody @Valid Task request) {
-        Task task = taskService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(task);
+    public ResponseEntity<TaskResponseDTO> create (@RequestBody @Valid TaskRequestDTO request) {
+        TaskResponseDTO taskResponseDTO = taskService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskResponseDTO);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody @Valid Task request) {
-        Task task = taskService.update(id, request);
-        return ResponseEntity.ok(task);
+    public ResponseEntity<TaskResponseDTO> update(@PathVariable Long id, @RequestBody @Valid TaskRequestDTO request) {
+        TaskResponseDTO taskResponseDTO = taskService.update(id, request);
+        return ResponseEntity.ok(taskResponseDTO);
     }
 
     @DeleteMapping("/{id}")

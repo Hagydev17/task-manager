@@ -1,5 +1,7 @@
 package com.hagydev.task_manager.task_manager.service.impl;
 
+import com.hagydev.task_manager.task_manager.dto.TaskRequestDTO;
+import com.hagydev.task_manager.task_manager.dto.TaskResponseDTO;
 import com.hagydev.task_manager.task_manager.entity.Task;
 import com.hagydev.task_manager.task_manager.exception.TaskNotFoundException;
 import com.hagydev.task_manager.task_manager.repository.TaskRepository;
@@ -21,35 +23,60 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public List<TaskResponseDTO> findAll() {
+        return taskRepository.findAll()
+                .stream()
+                .map(task -> new TaskResponseDTO(
+                        task.getId(),
+                        task.getTitle(),
+                        task.getDescription(),
+                        task.getStatus(),
+                        task.getCreatedAt(),
+                        task.getUpdatedAt()))
+                .toList();
     }
 
     @Override
-    public Task findById(Long id) {
-        return findTaskById(id);
+    public TaskResponseDTO findById(Long id) {
+        Task task = findTaskById(id);
+        return new TaskResponseDTO(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getCreatedAt(),
+                task.getUpdatedAt());
     }
 
     @Override
-    public Task create(Task task) {
-        Task t = new Task();
+    public TaskResponseDTO create(TaskRequestDTO taskRequestDTO) {
+        Task task = new Task();
 
-        t.setTitle(task.getTitle());
-        t.setDescription(task.getDescription());
-        t.setStatus(task.getStatus());
-        t.setCreatedAt(task.getCreatedAt());
-        t.setUpdatedAt(task.getUpdatedAt());
+        task.setTitle(taskRequestDTO.title());
+        task.setDescription(taskRequestDTO.description());
 
-        return taskRepository.save(t);
+        return new TaskResponseDTO(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getCreatedAt(),
+                task.getUpdatedAt());
     }
 
     @Override
-    public Task update(Long id, Task updatedTask) {
+    public TaskResponseDTO update(Long id, TaskRequestDTO updatedTask) {
         Task existingTask = findTaskById(id);
 
-        if (updatedTask.getTitle() != null) existingTask.setTitle(updatedTask.getTitle());
-        if (updatedTask.getDescription() != null) existingTask.setTitle(updatedTask.getDescription());
-        return taskRepository.save(existingTask);
+        if (updatedTask.title() != null) existingTask.setTitle(updatedTask.title());
+        if (updatedTask.description() != null) existingTask.setTitle(updatedTask.description());
+        return new TaskResponseDTO(
+                existingTask.getId(),
+                existingTask.getTitle(),
+                existingTask.getDescription(),
+                existingTask.getStatus(),
+                existingTask.getCreatedAt(),
+                existingTask.getUpdatedAt());
     }
 
     @Override

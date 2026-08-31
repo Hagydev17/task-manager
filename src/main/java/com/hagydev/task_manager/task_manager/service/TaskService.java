@@ -1,17 +1,19 @@
 package com.hagydev.task_manager.task_manager.service;
 
+import com.hagydev.task_manager.task_manager.dto.TaskRequestDTO;
+import com.hagydev.task_manager.task_manager.dto.TaskResponseDTO;
 import com.hagydev.task_manager.task_manager.entity.Task;
 
 import java.util.List;
 
 public interface TaskService {
-    List<Task> findAll();
+    List<TaskResponseDTO> findAll();
 
-    Task findById(Long id);
+    TaskResponseDTO findById(Long id);
 
-    Task create(Task task);
+    TaskResponseDTO create(TaskRequestDTO taskRequestDTO);
 
-    Task update(Long id, Task task);
+    TaskResponseDTO update(Long id, TaskRequestDTO taskRequestDTO);
 
     void delete(Long id);
 }
