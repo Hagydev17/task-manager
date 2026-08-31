@@ -1,6 +1,6 @@
-# Task Manager API
+# Task Manager
 
-A RESTful API built with Spring Boot for managing users and their tasks.
+A monolithic web application built with Spring Boot for managing users and their tasks.
 
 ## Tech Stack
 
@@ -9,6 +9,7 @@ A RESTful API built with Spring Boot for managing users and their tasks.
 - Spring Security
 - Spring Data JPA
 - H2 Database (in-memory)
+- Thymeleaf
 - Lombok
 - Maven
 
@@ -68,4 +69,4 @@ Tasks can have the following statuses:
 
 - [ ] JWT Authentication
 - [ ] Password encryption with BCrypt
-- [ ] Frontend (React)
+- [ ] Frontend (Thymeleaf)
