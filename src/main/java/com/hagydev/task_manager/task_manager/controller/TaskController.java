@@ -2,7 +2,6 @@ package com.hagydev.task_manager.task_manager.controller;
 
 import com.hagydev.task_manager.task_manager.dto.TaskRequestDTO;
 import com.hagydev.task_manager.task_manager.dto.TaskResponseDTO;
-import com.hagydev.task_manager.task_manager.entity.Task;
 import com.hagydev.task_manager.task_manager.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponseDTO> create (@RequestBody @Valid TaskRequestDTO request) {
+    public ResponseEntity<TaskResponseDTO> create(@RequestBody @Valid TaskRequestDTO request) {
         TaskResponseDTO taskResponseDTO = taskService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(taskResponseDTO);
     }

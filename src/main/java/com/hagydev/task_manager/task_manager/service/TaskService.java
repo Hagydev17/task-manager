@@ -2,7 +2,6 @@ package com.hagydev.task_manager.task_manager.service;
 
 import com.hagydev.task_manager.task_manager.dto.TaskRequestDTO;
 import com.hagydev.task_manager.task_manager.dto.TaskResponseDTO;
-import com.hagydev.task_manager.task_manager.entity.Task;
 
 import java.util.List;
 

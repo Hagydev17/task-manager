@@ -19,7 +19,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private Task findTaskById(Long id) {
-        return taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + id));
     }
 
     @Override
@@ -68,8 +69,10 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDTO update(Long id, TaskRequestDTO updatedTask) {
         Task existingTask = findTaskById(id);
 
-        if (updatedTask.title() != null) existingTask.setTitle(updatedTask.title());
-        if (updatedTask.description() != null) existingTask.setTitle(updatedTask.description());
+        if (updatedTask.title() != null)
+            existingTask.setTitle(updatedTask.title());
+        if (updatedTask.description() != null)
+            existingTask.setTitle(updatedTask.description());
         return new TaskResponseDTO(
                 existingTask.getId(),
                 existingTask.getTitle(),
