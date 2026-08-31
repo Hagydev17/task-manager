@@ -9,6 +9,7 @@ A monolithic web application built with Spring Boot for managing users and their
 - Spring Security
 - Spring Data JPA
 - H2 Database (in-memory)
+- PostgreSQL (production)
 - Thymeleaf
 - Lombok
 - Maven
