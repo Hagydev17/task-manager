@@ -71,10 +71,8 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDTO update(Long id, TaskRequestDTO updatedTask) {
         Task existingTask = findTaskById(id);
 
-        if (updatedTask.title() != null)
-            existingTask.setTitle(updatedTask.title());
-        if (updatedTask.description() != null)
-            existingTask.setTitle(updatedTask.description());
+        if (updatedTask.title() != null) existingTask.setTitle(updatedTask.title());
+        if (updatedTask.description() != null) existingTask.setDescription(updatedTask.description());
 
         Task taskSaved = taskRepository.save(existingTask);
         return new TaskResponseDTO(

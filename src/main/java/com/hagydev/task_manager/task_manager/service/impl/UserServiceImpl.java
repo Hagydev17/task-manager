@@ -6,6 +6,7 @@ import com.hagydev.task_manager.task_manager.entity.User;
 import com.hagydev.task_manager.task_manager.exception.UserNotFoundException;
 import com.hagydev.task_manager.task_manager.repository.UserRepository;
 import com.hagydev.task_manager.task_manager.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     private User findUserById(Long id) {
@@ -42,7 +45,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userRequestDTO.name());
         user.setEmail(userRequestDTO.email());
-        user.setPassword(userRequestDTO.password());
+        user.setPassword(passwordEncoder.encode(userRequestDTO.password()));
 
         User userSaved = userRepository.save(user);
 

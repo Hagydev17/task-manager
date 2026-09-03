@@ -53,10 +53,11 @@ Access the database console at `http://localhost:8081/h2-console`
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/users/{id}/tasks` | Get all tasks for a user |
-| POST | `/users/{id}/tasks` | Create a task for a user |
-| PATCH | `/tasks/{id}` | Update a task |
-| DELETE | `/tasks/{id}` | Delete a task |
+| GET | `/user/task` | Get all tasks |
+| GET | `/user/task/{id}` | Get task by ID |
+| POST | `/user/task` | Create a task |
+| PATCH | `/user/task/{id}` | Update a task |
+| DELETE | `/user/task/{id}` | Delete a task |
 
 ## Task Status
 
