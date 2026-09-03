@@ -29,14 +29,6 @@ A monolithic web application built with Spring Boot for managing users and their
 
 The API will be available at `http://localhost:8081`
 
-### H2 Console
-
-Access the database console at `http://localhost:8081/h2-console`
-
-- JDBC URL: `jdbc:h2:mem:taskmanagerdb`
-- Username: `sa`
-- Password: *(leave empty)*
-
 ## API Endpoints
 
 ### Users
