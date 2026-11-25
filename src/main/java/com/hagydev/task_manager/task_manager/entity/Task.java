@@ -27,6 +27,9 @@ public class Task {
     private String description;
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn (name = "user_id", nullable = false)
+    private User user;
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

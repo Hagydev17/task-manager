@@ -1,5 +1,7 @@
 package com.hagydev.task_manager.task_manager.dto;
 
+import com.hagydev.task_manager.task_manager.enums.TaskStatus;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -9,6 +11,7 @@ public record TaskRequestDTO(
         String title,
         @Size(min = 3, max = 500)
         @NotBlank(message = "La tarea debe tener una descripción")
-        String description
+        String description,
+        TaskStatus status
 ) {
 }

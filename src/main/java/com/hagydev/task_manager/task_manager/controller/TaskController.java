@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/task")
+@RequestMapping("/users/{userId}/tasks")
 public class TaskController {
     private final TaskService taskService;
 
@@ -20,31 +20,31 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskResponseDTO>> findAll() {
-        List<TaskResponseDTO> task = taskService.findAll();
+    public ResponseEntity<List<TaskResponseDTO>> findAll(@PathVariable Long userId) {
+        List<TaskResponseDTO> task = taskService.findAll(userId);
         return ResponseEntity.ok(task);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<TaskResponseDTO> findById(@PathVariable Long userId, @PathVariable Long id) {
         TaskResponseDTO taskResponseDTO = taskService.findById(id);
         return ResponseEntity.ok(taskResponseDTO);
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponseDTO> create(@RequestBody @Valid TaskRequestDTO request) {
-        TaskResponseDTO taskResponseDTO = taskService.create(request);
+    public ResponseEntity<TaskResponseDTO> create(@PathVariable Long userId, @RequestBody @Valid TaskRequestDTO request) {
+        TaskResponseDTO taskResponseDTO = taskService.create(userId, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(taskResponseDTO);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> update(@PathVariable Long id, @RequestBody @Valid TaskRequestDTO request) {
+    public ResponseEntity<TaskResponseDTO> update(@PathVariable Long userId, @PathVariable Long id, @RequestBody @Valid TaskRequestDTO request) {
         TaskResponseDTO taskResponseDTO = taskService.update(id, request);
         return ResponseEntity.ok(taskResponseDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long userId, @PathVariable Long id) {
         taskService.delete(id);
         return ResponseEntity.noContent().build();
     }
